@@ -24,4 +24,4 @@ class ControlePatrimonioView(generics.ListAPIView):
     def list(self, request):
         acao = self.queryset.filter(usuario = request.user)
         #https://github.com/ribeirosaimon/controle_carteira/blob/main/core/classe_acao/acao_obj.py
-        return Response()
+        return Response({'acao':f'{acao}'})
