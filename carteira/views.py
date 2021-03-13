@@ -15,3 +15,13 @@ class CarteiraView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
+
+
+class ControlePatrimonioView(generics.ListAPIView):
+    queryset = CarteiraModel.objects.all()
+    serializer_class = CarteiraSerializers
+
+    def list(self, request):
+        acao = self.queryset.filter(usuario = request.user)
+        #https://github.com/ribeirosaimon/controle_carteira/blob/main/core/classe_acao/acao_obj.py
+        return Response()
