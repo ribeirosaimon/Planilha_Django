@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
-from .views import VendaViews
+from .views import VendasViews
 
 
 VendasRouter = SimpleRouter()
-VendasRouter.register('venda', VendaViews)
+VendasRouter.register('venda', VendasViews)
