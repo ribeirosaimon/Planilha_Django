@@ -1,25 +1,17 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework.response import Response
-from .models import CarteiraModel
-from .seralizers import CarteiraSerializers
+from compras.models import CompraModel
+from compras.serializers import CompraSerializers
 
-
-class CarteiraView(generics.ListCreateAPIView):
-    queryset = CarteiraModel.objects.all()
-    serializer_class = CarteiraSerializers
-
+class CarteiraView(viewsets.ViewSet):
+    queryset = CompraModel.objects.all()
+    serializer_class = CompraSerializers
     def list(self, request):
-        queryset = self.queryset.filter(usuario = request.user)
-        serializer = CarteiraSerializers(queryset, many=True)
-        return Response(serializer.data)
+        return Response({'acao':'ok'})
 
-    def perform_create(self, serializer):
-        serializer.save(usuario=self.request.user)
-
-
-class ControlePatrimonioView(generics.ListAPIView):
-    queryset = CarteiraModel.objects.all()
-    serializer_class = CarteiraSerializers
+class ControlePatrimonioView(viewsets.ViewSet):
+    queryset = CompraModel.objects.all()
+    serializer_class = CompraSerializers
 
     def list(self, request):
         acao = self.queryset.filter(usuario = request.user)

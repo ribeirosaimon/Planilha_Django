@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import CarteiraModel
+from .models import VendaModel
 
-class CarteiraSerializers(serializers.ModelSerializer):
+class VendaSerializers(serializers.ModelSerializer):
     class Meta:
-        model = CarteiraModel
+        model = VendaModel
         fields = (
             'id',
             'acao',

@@ -11,7 +11,7 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
-class CarteiraModel(Base):
+class CompraModel(Base):
     usuario = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     acao = models.CharField(max_length=10)
     quantidade = models.IntegerField()
