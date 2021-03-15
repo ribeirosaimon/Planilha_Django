@@ -6,7 +6,9 @@ class VendaSerializers(serializers.ModelSerializer):
         model = VendaModel
         fields = (
             'id',
+            'data',
             'acao',
             'quantidade',
             'preco_medio',
+            'preco_venda'
         )

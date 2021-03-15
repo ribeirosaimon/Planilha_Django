@@ -8,8 +8,10 @@ from calculos.carteira_calc import Carteira
 class CarteiraView(viewsets.ViewSet):
     queryset = CompraModel.objects.all()
     serializer_class = CompraSerializers
-    carteira = Carteira(CompraModel, VendaModel)
     def list(self, request):
+        compra_model_user = CompraModel.objects.filter(usuario=request.user)
+        venda_model_user = VendaModel.objects.filter(usuario=request.user)
+        carteira = Carteira(compra_model_user, venda_model_user)
         return Response({'acao':'ok'})
 
 class ControlePatrimonioView(viewsets.ViewSet):
