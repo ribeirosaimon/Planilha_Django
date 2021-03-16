@@ -14,6 +14,7 @@ class Base(models.Model):
 class CompraModel(Base):
     usuario = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     data = models.DateField()
+    nacional = models.BooleanField()
     acao = models.CharField(max_length=10)
     quantidade = models.IntegerField()
     preco_medio = models.DecimalField(max_digits=10, decimal_places=2)

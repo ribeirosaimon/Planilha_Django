@@ -6,6 +6,7 @@ class CompraSerializers(serializers.ModelSerializer):
         model = CompraModel
         fields = (
             'id',
+            'nacional',
             'data',
             'acao',
             'quantidade',

@@ -12,7 +12,8 @@ class CarteiraView(viewsets.ViewSet):
         compra_model_user = CompraModel.objects.filter(usuario=request.user)
         venda_model_user = VendaModel.objects.filter(usuario=request.user)
         carteira = Carteira(compra_model_user, venda_model_user)
-        return Response({'acao':'ok'})
+        meu_portfolio = carteira.minha_carteira()
+        return Response({'carteira':meu_portfolio})
 
 class ControlePatrimonioView(viewsets.ViewSet):
     queryset = CompraModel.objects.all()
@@ -20,5 +21,4 @@ class ControlePatrimonioView(viewsets.ViewSet):
 
     def list(self, request):
         acao = self.queryset.filter(usuario = request.user)
-        #https://github.com/ribeirosaimon/controle_carteira/blob/main/core/classe_acao/acao_obj.py
         return Response({'acao':f'{acao}'})
