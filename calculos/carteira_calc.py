@@ -1,4 +1,6 @@
 from .lucro import calc_lucro
+from .sraping_yahoo import *
+
 
 def Sort(sub_li): 
     sub_li.sort(key = lambda x: x[0]) 
@@ -16,12 +18,18 @@ class Carteira:
         self.CompraModel = CompraModel
         self.VendaModel = VendaModel
         self.carteira_atual()
+
+        #nome das ações e nacional
+        self.precos_da_carteira = [
+            info_das_acoes(list(self.carteira['compras'][x].keys())[0],
+            list(self.carteira['compras'][x].values())[0]['nacional'])
+            for x in range(len(self.carteira['compras']))]
         
     def minha_carteira(self):
         portfolio = self.carteira['compras']
         for x in range(len(portfolio)):
             acao = list(portfolio[x].keys())[0]
-            portfolio[x][acao]['lucro'] = calc_lucro(portfolio[x])
+            portfolio[x][acao]['lucro'] = calc_lucro(portfolio[x], self.precos_da_carteira)
         return portfolio
         
     def carteira_atual(self):
