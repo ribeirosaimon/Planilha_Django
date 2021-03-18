@@ -1,3 +1,6 @@
 from django.test import TestCase
+from calculos.data_conf import *
+from datetime import date
 
-# Create your tests here.
+class QuestionModelTests(TestCase):
+    pass
