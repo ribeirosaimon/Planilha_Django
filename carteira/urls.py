@@ -4,4 +4,4 @@ from rest_framework.routers import SimpleRouter
 
 CarteiraRouter = SimpleRouter()
 CarteiraRouter.register('carteira', CarteiraView)
-CarteiraRouter.register('carteira/relatorio',ControlePatrimonioView)
+CarteiraRouter.register('relatorio/carteira',ControlePatrimonioView)

@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import VendaSerializers
 from .models import VendaModel
+from .relatorios.relatorio_das_vendas import RelatorioVendas
 
 class VendasViews(viewsets.ModelViewSet):
     queryset = VendaModel.objects.all()
@@ -16,3 +17,11 @@ class VendasViews(viewsets.ModelViewSet):
         serializer.save(usuario=self.request.user)
 
 
+class RelatorioVendasViews(viewsets.ViewSet):
+    queryset = VendaModel.objects.all()
+    serializer_class = VendaSerializers
+    def list(self, request):
+        ano_info = self.request.query_params.get('ano')
+        mes_info = self.request.query_params.get('mes')
+        vendas = RelatorioVendas(mes_info, ano_info,request.user)
+        return Response({'Rerlatorio':'Venda'})

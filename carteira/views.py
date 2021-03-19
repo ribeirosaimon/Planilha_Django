@@ -5,6 +5,8 @@ from vendas.models import VendaModel
 from compras.serializers import CompraSerializers
 from calculos.carteira_calc import Carteira
 
+
+
 class CarteiraView(viewsets.ViewSet):
     queryset = CompraModel.objects.all()
     serializer_class = CompraSerializers
