@@ -24,4 +24,5 @@ class RelatorioVendasViews(viewsets.ViewSet):
         ano_info = self.request.query_params.get('ano')
         mes_info = self.request.query_params.get('mes')
         vendas = RelatorioVendas(mes_info, ano_info,request.user)
-        return Response({'Rerlatorio':'Venda'})
+        
+        return Response({'relatorio':vendas.imposto_de_renda()})
