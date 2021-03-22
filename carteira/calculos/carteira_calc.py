@@ -142,6 +142,151 @@ class Carteira:
         portfolio = self.carteira['compras']
         for x in range(len(portfolio)):
             acao = list(portfolio[x].keys())[0]
-            portfolio[x][acao]['lucro'] = 100000000000000
+            portfolio[x][acao]['mma'] = self.media_movel_expodencial(acao)
+            portfolio[x][acao]['topo_fundo'] = self.topo_fundo(acao)
+            portfolio[x][acao]['hilo'] = self.indicador_hilo(acao)
+            portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
+            portfolio[x][acao]['rsi'] = self.rsi(acao)
+            portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
         return portfolio
         
+
+    
+    #info de analises tecnicas
+
+
+
+    def media_movel_expodencial(self, acao, tempo=20):
+        fechamentos = []
+        compra = False
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for index in range(0,tempo):
+                    fechamento = valores['info'][index]['dados']['close']
+                    fechamentos.append(fechamento)
+        mma = round(sum(fechamentos) / tempo,2)
+        print('----------------------')
+        print(acao)
+        close = fechamentos[0]
+        if close < mma:
+            compra = True
+        dict_mma = {'mma':mma,
+                    'info':{'buy':compra}}
+        return dict_mma
+
+    def topo_fundo(self, acao, tempo=2):
+        contador_max, contador_min = 0,0
+        resultado = [x['info'][0]['dados'] for x in self.precos_da_carteira if x['acao']== acao]
+        candle_referencia = {'minima':resultado[0]['min'],'maxima':resultado[0]['max']}
+        indicador = {'top':['none',0],'bottom':['none',0]}
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for dados in valores['info'][::-1]:
+                    minimas = dados['dados']['min']
+                    maximas = dados['dados']['max']
+                    if maximas > candle_referencia['maxima']:
+                        if contador_max < 2:
+                            contador_max += 1
+                        if contador_max >= 2:
+                            contador_max += 1
+                            contador_min = 0
+                            candle_referencia['maxima'] = maximas
+                            candle_referencia['minima'] = minimas
+                            indicador['top'][0] = True
+                            indicador['top'][1] = candle_referencia['maxima']
+                            indicador['bottom'][0] = False
+
+                    if minimas < candle_referencia['minima']:
+                        if contador_min < 2:
+                            contador_min += 1
+                        if contador_min >= 2:
+                            contador_min += 1
+                            contador_max = 0
+                            candle_referencia['maxima'] = maximas
+                            candle_referencia['minima'] = minimas
+                            indicador['top'][0] = False
+                            indicador['bottom'][1] = candle_referencia['minima']
+                            indicador['bottom'][0] = True
+        return indicador
+
+    
+    def indicador_hilo(self,acao, candles=3):
+        minimas, maximas =[], []
+        fechamento = [x['info'][0]['dados']['close'] for x in self.precos_da_carteira if x['acao']== acao][0]
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for index in range(candles):
+                    minima = valores['info'][index]['dados']['min']
+                    maxima = valores['info'][index]['dados']['max']
+                    minimas.append(minima)
+                    maximas.append(maxima)
+
+        mma_minima = round(sum(minimas) / 3,2)
+        mma_maxima = round(sum(maximas)/3,2)
+        dict_hilo = {'hilo':'none',
+                     'info':{'top':mma_maxima,'bottom':mma_minima}}
+        if fechamento < mma_minima:
+            dict_hilo['hilo'] = 'buy'
+        if fechamento > mma_maxima:
+            dict_hilo['hilo'] = 'sell'
+        return dict_hilo
+
+
+    def bandas_de_bolinger(self,acao,tempo=20):
+        fechamentos,lista_quadrados = [],[]
+        dict_bolinger = {'bollinger':'none',
+                         'dados':{'top':0,
+                                  'bottom':0}}
+        fechamento = [x['info'][0]['dados']['close'] for x in self.precos_da_carteira if x['acao']== acao][0] 
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for index in range(0,tempo):
+                    fechamento = valores['info'][index]['dados']['close']
+                    fechamentos.append(fechamento)
+        mma = sum(fechamentos) / tempo
+        for x in range(tempo):
+            calculo = (mma - fechamentos[x]) ** 2
+            lista_quadrados.append(calculo)
+        desvio_padrao = (sum(lista_quadrados) / tempo) **0.5
+        banda_superior = round(mma + (desvio_padrao * 2),2)
+        banda_inferior = round(mma - (desvio_padrao * 2),2)
+        if fechamento < banda_inferior:
+            dict_bolinger['bollinger'] = 'buy'
+        if fechamento > banda_superior:
+            dict_bolinger['bollinger'] = 'sell'
+        dict_bolinger['dados']['top'] = banda_superior
+        dict_bolinger['dados']['bottom'] = banda_inferior
+        return dict_bolinger
+
+        #rsi
+    def rsi(self,acao, tempo=14, min_ifr=30, max_ifr=70):
+        media_ganho, media_perda = [],[]
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for index in range(0,tempo):
+                    fechamento = valores['info'][index]['dados']['close']
+                    abertura = valores['info'][index]['dados']['open']
+                    calculo = abs(fechamento - abertura)
+                    if fechamento > abertura:
+                        media_ganho.append(calculo)
+                    if fechamento < abertura:
+                        media_perda.append(calculo)
+        fr = (sum(media_ganho) / tempo) / (sum(media_perda) / tempo)
+        ifr = round(100 - (100/(1+fr)),2)
+        dict_ifr = {'ifr':ifr,'dados':'none'}
+        if ifr < min_ifr:
+            dict_ifr['dados'] = 'buy'
+        if ifr > max_ifr:
+            dict_ifr['dados'] = 'sell'
+        return dict_ifr
+
+    def avg_vol(self,acao):
+        avg_vol = []
+        volume_diario = [x['info'][0]['dados']['volume'] for x in self.precos_da_carteira if x['acao']== acao][0]
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                for dados in valores['info']:
+                    volume = dados['dados']['volume']
+                    avg_vol.append(volume)
+        volume_medio = int(round(sum(avg_vol)/len(avg_vol),0))
+        return calculo_de_volume(volume_medio,volume_diario)
