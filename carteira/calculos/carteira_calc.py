@@ -142,12 +142,13 @@ class Carteira:
         portfolio = self.carteira['compras']
         for x in range(len(portfolio)):
             acao = list(portfolio[x].keys())[0]
-            portfolio[x][acao]['mma'] = self.media_movel_expodencial(acao)
-            portfolio[x][acao]['topo_fundo'] = self.topo_fundo(acao)
-            portfolio[x][acao]['hilo'] = self.indicador_hilo(acao)
-            portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
-            portfolio[x][acao]['rsi'] = self.rsi(acao)
-            portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
+            if acao != 'caixa':
+                portfolio[x][acao]['mma'] = self.media_movel_expodencial(acao)
+                portfolio[x][acao]['topo_fundo'] = self.topo_fundo(acao)
+                portfolio[x][acao]['hilo'] = self.indicador_hilo(acao)
+                portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
+                portfolio[x][acao]['rsi'] = self.rsi(acao)
+                portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
         return portfolio
         
 
@@ -165,8 +166,6 @@ class Carteira:
                     fechamento = valores['info'][index]['dados']['close']
                     fechamentos.append(fechamento)
         mma = round(sum(fechamentos) / tempo,2)
-        print('----------------------')
-        print(acao)
         close = fechamentos[0]
         if close < mma:
             compra = True
