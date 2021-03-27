@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'carteira',
     'compras',
     'vendas',
+
+    'frontend'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +52,7 @@ ROOT_URLCONF = 'planilha_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +129,8 @@ REST_FRAMEWORK ={
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
+
+URL_BASE = 'http://127.0.0.1:8000'

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="conteiner">
+        <h1>Carteira</h1>
+        {% if user.is_anonymous %}
+            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                Seja Bem-vindo(a) {{ user }}!
+            </div>
+            <a class="btn btn-primary" href="{% url 'relatorio_carteira' %}">Minha Carteira</a>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

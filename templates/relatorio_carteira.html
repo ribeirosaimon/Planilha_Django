@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patrimonio Total</th>
+                    <th>Patrimonio no Brasil</th>
+                    <th>Patrimonio nos Estados Unidos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_total }}</td>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_br }}</td>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_usa }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Caixa Total</th>
+                    <th>Caixa no Brasil</th>
+                    <th>Caixa nos Estados Unidos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ info.patrimonio.caixa.caixa_total }}</td>
+                    <td>{{ info.patrimonio.caixa.caixa_br }}</td>
+                    <td>{{ info.patrimonio.caixa.caixa_usa }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ação</th>
+                    <th>Nacional</th>
+                    <th>Preço Médio</th>
+                    <th>Quantidade</th>
+                    <th>Posição</th>
+                    <th>Lucro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in carteira %}
+                <tr>
+                    <td>{{ x.acao }}</td>
+                    <td>{{ x.nacional }}</td>
+                    <td>{{ x.pm }}</td>
+                    <td>{{ x.qtd }}</td>
+                    <td>{{ x.pos }}</td>
+                    <td>{{ x.lucro }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  </div>
+    
+{% endblock %}

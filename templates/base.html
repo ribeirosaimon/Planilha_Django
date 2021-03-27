@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit-no">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel='stylesheet' id='bootstrap-css'>
+    <link href="https://getbootstrap.com/docs/4.0/examples/sig-in/sigin.css" rel="stylesheet">
+    <title>Carteira</title>
+</head>
+<body class="text-center">
+    <div class="container">
+        Seja bem vindo(a) {{ user.get_full_name }}!
+        <a class="btn btn-primary" href="#"> Carteira </a>
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/boostrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
