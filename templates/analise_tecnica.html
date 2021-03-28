@@ -42,12 +42,30 @@
                     <th>Ação</th>
                     <th>Preço Medio</th>
 
+                    <th colspan="2">Mma</th>
+                    <th colspan="2">Fundo ou Topo</th>
+                    <th colspan=3>Hight Low</th>
+                    <th colspan=3>Bandas de Bollinger</th>
+
+
                 </tr>
             </thead>
             <tbody>
                 {% for x in info %}
                 <tr>
                     <td>{{ x.acao }}</td>
+                    <td>{{ x.info.pm }}</td>
+                    <td>{{ x.info.mma.mma }}</td>
+                    <td>{{ x.info.mma.mma.info.buy }}</td>
+                    <td>{{ x.info.topo_fundo.bottom }}</td>
+                    <td>{{ x.info.topo_fundo.top }}</td>
+                    <td>{{ x.info.hilo.hilo }}</td>
+                    <td>{{ x.info.hilo.info.bottom }}</td>
+                    <td>{{ x.info.hilo.info.top }}</td>
+                    <td>{{ x.info.bandas_de_bolinger.bollinger }}</td>
+                    <td>{{ x.info.bandas_de_bolinger.dados.bottom }}</td>
+                    <td>{{ x.info.bandas_de_bolinger.dados.top }}</td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>

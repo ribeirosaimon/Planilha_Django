@@ -51,4 +51,5 @@ class AnaliseTecnicaView(LoginRequiredMixin, TemplateView):
         carteira = requests.get(url, headers=headers).json()['carteira']
         info_carteira = [{'acao':list(x.keys())[0],'info':list(x.values())[0]} for x in carteira if list(x.keys())[0] != 'caixa']
         context['info']= info_carteira
+        print(info_carteira)
         return context
