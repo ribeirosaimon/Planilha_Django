@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patrimonio Total</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_total }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Caixa Total</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ info.patrimonio.caixa.caixa_total }}</td>
+
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ação</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in carteira %}
+                <tr>
+                    <td>{{ x.acao }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  </div>
+    
+{% endblock %}

@@ -12,7 +12,6 @@ class CarteiraView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'index'
     template_name = 'index.html'
 
-
     def get_context_data(self, **kwargs):
         nome_user = self.request.user
         token = Token.objects.get(user=nome_user)
@@ -36,3 +35,19 @@ def dict_contexto(dicionario):
         'lucro':dicionario[acao]['lucro'],
     }
     return dict_retorno
+
+
+class AnaliseTecnicaView(LoginRequiredMixin, TemplateView):
+    login_url = 'user/login/'
+    redirect_field_name = 'analise_tecnica'
+    template_name = 'analise_tecnica.html'
+
+    def get_context_data(self, **kwargs):
+        nome_user = self.request.user
+        token = Token.objects.get(user=nome_user)
+        context = super(AnaliseTecnicaView, self).get_context_data(**kwargs)
+        url = f'{settings.URL_BASE}/api/v1/relatorio/carteira'
+        headers = {'Authorization': f'Token {token}'}
+        carteira = requests.get(url, headers=headers).json()
+        print(carteira)
+        return context

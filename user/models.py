@@ -27,6 +27,7 @@ class UserManager(BaseUserManager):
         return self._create_user(email,password,**extra_fields)
 
 class CustomUser(AbstractUser):
+
     email = models.EmailField('E-mail', unique=True)
     phone = models.CharField('Nome',max_length=15)
     is_staff = models.BooleanField('Membro da equipe',default=True)
