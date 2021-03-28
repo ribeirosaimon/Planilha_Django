@@ -48,6 +48,7 @@ class AnaliseTecnicaView(LoginRequiredMixin, TemplateView):
         context = super(AnaliseTecnicaView, self).get_context_data(**kwargs)
         url = f'{settings.URL_BASE}/api/v1/relatorio/carteira'
         headers = {'Authorization': f'Token {token}'}
-        carteira = requests.get(url, headers=headers).json()
-        print(carteira)
+        carteira = requests.get(url, headers=headers).json()['carteira']
+        info_carteira = [{'acao':list(x.keys())[0],'info':list(x.values())[0]} for x in carteira if list(x.keys())[0] != 'caixa']
+        context['info']= info_carteira
         return context
