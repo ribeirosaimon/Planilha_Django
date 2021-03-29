@@ -149,7 +149,8 @@ class Carteira:
                 portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
                 portfolio[x][acao]['rsi'] = self.rsi(acao)
                 portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
-                portfolio[x][acao]['preco_acao'] = 0
+                portfolio[x][acao]['preco_acao'] = 
+                #Colocar preço da ação
         return portfolio
         
 
