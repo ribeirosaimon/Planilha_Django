@@ -32,6 +32,7 @@ class Carteira:
             acao = list(portfolio[x].keys())[0]
             if acao != 'caixa':
                 portfolio[x][acao]['lucro'] = calc_lucro(portfolio[x], self.precos_da_carteira)
+                portfolio[x][acao]['preco_acao'] = self.preco_acao(acao)
         return portfolio
         
     def carteira_atual(self):
@@ -149,7 +150,7 @@ class Carteira:
                 portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
                 portfolio[x][acao]['rsi'] = self.rsi(acao)
                 portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
-                portfolio[x][acao]['preco_acao'] = 
+                portfolio[x][acao]['preco_acao'] = self.preco_acao(acao)
                 #Colocar preço da ação
         return portfolio
         
@@ -291,3 +292,8 @@ class Carteira:
                     avg_vol.append(volume)
         volume_medio = int(round(sum(avg_vol)/len(avg_vol),0))
         return calculo_de_volume(volume_medio,volume_diario)
+
+    def preco_acao(self,acao):
+        for valores in self.precos_da_carteira:
+            if acao == valores['acao']:
+                return valores['info'][0]['dados']['close']

@@ -33,6 +33,7 @@ def dict_contexto(dicionario):
         'qtd':dicionario[acao]['qtd'],
         'pos':dicionario[acao]['pos'],
         'lucro':dicionario[acao]['lucro'],
+        'preco_acao':dicionario[acao]['preco_acao']
     }
     return dict_retorno
 
@@ -67,4 +68,4 @@ class RelatorioImpostoRenda(LoginRequiredMixin, TemplateView):
         headers = {'Authorization': f'Token {token}'}
         carteira = requests.get(url, headers=headers).json()
         context['ir'] = carteira
-        return context
+        return context  
