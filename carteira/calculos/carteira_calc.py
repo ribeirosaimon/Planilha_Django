@@ -77,7 +77,7 @@ class Carteira:
                                 pos = acao[1].preco_medio * acao[1].quantidade
                                 x[acao[1].acao]['qtd'] += acao[1].quantidade
                                 x[acao[1].acao]['pos'] += pos
-                                x[acao[1].acao]['pm'] = x[acao[1].acao]['pos'] / x[acao[1].acao]['qtd']
+                                x[acao[1].acao]['pm'] = round(x[acao[1].acao]['pos'] / x[acao[1].acao]['qtd'],2)
                     self.carteira['compras'] = compras
                 if acao[1].__class__.__name__ == 'VendaModel':
                     if acao[1].acao in [list(x.keys())[0] for x in self.carteira['compras']]:
@@ -149,6 +149,7 @@ class Carteira:
                 portfolio[x][acao]['bandas_de_bolinger'] = self.bandas_de_bolinger(acao)
                 portfolio[x][acao]['rsi'] = self.rsi(acao)
                 portfolio[x][acao]['avg_vol'] = self.avg_vol(acao)
+                portfolio[x][acao]['preco_acao'] = 0
         return portfolio
         
 
