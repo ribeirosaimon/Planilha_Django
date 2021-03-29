@@ -51,5 +51,20 @@ class AnaliseTecnicaView(LoginRequiredMixin, TemplateView):
         carteira = requests.get(url, headers=headers).json()['carteira']
         info_carteira = [{'acao':list(x.keys())[0],'info':list(x.values())[0]} for x in carteira if list(x.keys())[0] != 'caixa']
         context['info']= info_carteira
-        print(info_carteira)
+        return context
+
+
+class RelatorioImpostoRenda(LoginRequiredMixin, TemplateView):
+    login_url = 'user/login/'
+    redirect_field_name = 'relatorio_ir'
+    template_name = 'relatorio_ir.html'
+
+    def get_context_data(self, **kwargs):
+        nome_user = self.request.user
+        token = Token.objects.get(user=nome_user)
+        context = super(RelatorioImpostoRenda, self).get_context_data(**kwargs)
+        url = f'{settings.URL_BASE}/api/v1/relatorio/venda'
+        headers = {'Authorization': f'Token {token}'}
+        carteira = requests.get(url, headers=headers).json()
+        context['ir'] = carteira
         return context
