@@ -48,9 +48,9 @@ class RelatorioVendas():
             lucro_total += retorno
         dict_retorno = {
             'lucro': {
-                'lucro_total':lucro_total,
-                'lucro_br':lucro_br,
-                'lucro_usa':lucro_usa,
+                'lucro_total':round(lucro_total,2),
+                'lucro_br':round(lucro_br,2),
+                'lucro_usa':round(lucro_usa,2),
             }
         }
         return dict_retorno

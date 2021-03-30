@@ -1,16 +1,20 @@
   
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 from rest_framework.authtoken.models import Token
+from django.urls import reverse_lazy
 import requests
 from django.conf import settings
+from .forms import CompraModelForm
+from django.contrib import messages
 
-
-class CarteiraView(LoginRequiredMixin, TemplateView):
+class CarteiraView(LoginRequiredMixin, FormView):
     login_url = 'user/login/'
     redirect_field_name = 'index'
     template_name = 'index.html'
+    form_class = CompraModelForm
+    success_url = reverse_lazy('relatorio_carteira')
 
     def get_context_data(self, **kwargs):
         nome_user = self.request.user
@@ -23,6 +27,16 @@ class CarteiraView(LoginRequiredMixin, TemplateView):
         context['carteira'] = [dict_contexto(x) for x in carteira['carteira'] if list(x.keys())[0] != 'caixa']
         return context
 
+    def form_valid(self,form,*args,**kwargs):
+        acao = form.save(commit=False)
+        acao.usuario = self.request.user
+        acao.save()
+        messages.success(self.request, 'Ação salva')
+        return super(CarteiraView, self).form_valid(form,*args,**kwargs)
+
+    def form_invalid(self, form, *args3, **kwargs):
+        messages.error(self.request,'Algo deu errado')
+        return super(CarteiraView, self).form_valid(form,*args,**kwargs)
 
 def dict_contexto(dicionario):
     acao = list(dicionario.keys())[0]

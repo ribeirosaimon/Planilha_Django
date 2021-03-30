@@ -127,7 +127,7 @@ class Carteira:
                     dict_patrimonio['acao']['posicao_br'] += calculo_patrimonio(acao, x, self.precos_da_carteira)
                 if x[acao]['nacional'] == False:
                     dict_patrimonio['valor_investido']['valor_usa'] += round(float(x[acao]['pos']),2)
-                    dict_patrimonio['acao']['posicao_usa'] += calculo_patrimonio(acao, x, self.precos_da_carteira)
+                    dict_patrimonio['acao']['posicao_usa'] += round(calculo_patrimonio(acao, x, self.precos_da_carteira),2)
                     
         dict_patrimonio['caixa']['caixa_total'] = round(dict_patrimonio['caixa']['caixa_br'] + (dict_patrimonio['caixa']['caixa_usa'] * get_dolar_price()),2)
         dict_patrimonio['acao']['posicao_total'] = round(dict_patrimonio['acao']['posicao_br'] + (dict_patrimonio['acao']['posicao_usa'] * get_dolar_price()),2)
