@@ -9,6 +9,10 @@ from django.conf import settings
 from .forms import CompraModelForm
 from django.contrib import messages
 
+
+#https://stackoverflow.com/questions/15497693/django-can-class-based-views-accept-two-forms-at-a-time
+
+
 class CarteiraView(LoginRequiredMixin, FormView):
     login_url = 'user/login/'
     redirect_field_name = 'index'
