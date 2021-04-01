@@ -30,11 +30,11 @@ class CarteiraView(LoginRequiredMixin, FormView):
     def form_valid(self,form,*args,**kwargs):
         acao = form.save(commit=False)
         acao.usuario = self.request.user
-        acao.save()
-        messages.success(self.request, 'Ação salva')
+        #acao.save()
+        messages.success(self.request, 'Informação Salva')
         return super(CarteiraView, self).form_valid(form,*args,**kwargs)
 
-    def form_invalid(self, form, *args3, **kwargs):
+    def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request,'Algo deu errado')
         return super(CarteiraView, self).form_valid(form,*args,**kwargs)
 
