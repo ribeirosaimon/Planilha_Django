@@ -1,86 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <div class="row">
-      <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Patrimonio Total</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ info.patrimonio.patrimonio.patrimonio_total }}</td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
-      <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Caixa Total</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ info.patrimonio.caixa.caixa_total }}</td>
-
-                </tr>
-            </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Ação</th>
-                    <th>Preço Medio</th>
-                    <th>Preço Fechamento</th>
-                    <th colspan="2">Mma</th>
-                    <th colspan="2">Fundo ou Topo</th>
-                    <th colspan=3>Hight Low</th>
-                    <th colspan=3>Bandas de Bollinger</th>
-                    <th colspan=2>RSI</th>
-                    <th >Volume</th>
-                    <th colspan=3>Avg Volume</th>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ação</th>
+            <th>Preço Medio</th>
+            <th>Preço Fechamento</th>
+            <th colspan="2">Mma</th>
+            <th colspan="2">Fundo ou Topo</th>
+            <th colspan=3>Hight Low</th>
+            <th colspan=3>Bandas de Bollinger</th>
+            <th colspan=2>RSI</th>
+            <th >Volume</th>
+            <th colspan=3>Avg Volume</th>
 
 
-                </tr>
-            </thead>
-            <tbody>
-                {% for x in info %}
-                <tr>
-                    <td>{{ x.acao }}</td>
-                    <td>{{ x.info.pm }}</td>
-                    <td>{{ x.info.preco_acao }}</td>
-                    <td>{{ x.info.mma.mma }}</td>
-                    <td>{{ x.info.mma.mma.info.buy }}</td>
-                    <td>{{ x.info.topo_fundo.bottom }}</td>
-                    <td>{{ x.info.topo_fundo.top }}</td>
-                    <td>{{ x.info.hilo.hilo }}</td>
-                    <td>{{ x.info.hilo.info.bottom }}</td>
-                    <td>{{ x.info.hilo.info.top }}</td>
-                    <td>{{ x.info.bandas_de_bolinger.bollinger }}</td>
-                    <td>{{ x.info.bandas_de_bolinger.dados.bottom }}</td>
-                    <td>{{ x.info.bandas_de_bolinger.dados.top }}</td>
-                    <td>{{ x.info.rsi.ifr }}</td>
-                    <td>{{ x.info.rsi.dados }}</td>
-                    <td>{{ x.info.avg_vol.volume }}</td>
-                    <td>{{ x.info.avg_vol.dados.avg_vol }}</td>
-                    <td>{{ x.info.avg_vol.dados.high }}</td>
-                    <td>{{ x.info.avg_vol.dados.percent }}</td>
-                    
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-  </div>
-    
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in info %}
+        <tr>
+            <td>{{ x.acao }}</td>
+            <td>{{ x.info.pm }}</td>
+            <td>{{ x.info.preco_acao }}</td>
+            <td>{{ x.info.mma.mma }}</td>
+            <td>{{ x.info.mma.mma.info.buy }}</td>
+            <td>{{ x.info.topo_fundo.bottom }}</td>
+            <td>{{ x.info.topo_fundo.top }}</td>
+            <td>{{ x.info.hilo.hilo }}</td>
+            <td>{{ x.info.hilo.info.bottom }}</td>
+            <td>{{ x.info.hilo.info.top }}</td>
+            <td>{{ x.info.bandas_de_bolinger.bollinger }}</td>
+            <td>{{ x.info.bandas_de_bolinger.dados.bottom }}</td>
+            <td>{{ x.info.bandas_de_bolinger.dados.top }}</td>
+            <td>{{ x.info.rsi.ifr }}</td>
+            <td>{{ x.info.rsi.dados }}</td>
+            <td>{{ x.info.avg_vol.volume }}</td>
+            <td>{{ x.info.avg_vol.dados.avg_vol }}</td>
+            <td>{{ x.info.avg_vol.dados.high }}</td>
+            <td>{{ x.info.avg_vol.dados.percent }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
