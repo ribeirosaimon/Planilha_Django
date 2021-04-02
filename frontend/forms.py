@@ -10,6 +10,7 @@ class CompraModelForm(forms.ModelForm):
         fields = ['data', 'nacional','acao','quantidade','preco_medio'] 
 
 
+
 class VendaModelForm(forms.ModelForm):
     class Meta:
         model = VendaModel

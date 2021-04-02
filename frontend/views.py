@@ -6,11 +6,8 @@ from rest_framework.authtoken.models import Token
 from django.urls import reverse_lazy
 import requests
 from django.conf import settings
-from .forms import CompraModelForm
+from .forms import CompraModelForm, VendaModelForm
 from django.contrib import messages
-
-
-#https://stackoverflow.com/questions/15497693/django-can-class-based-views-accept-two-forms-at-a-time
 
 
 class CarteiraView(LoginRequiredMixin, FormView):
@@ -19,6 +16,7 @@ class CarteiraView(LoginRequiredMixin, FormView):
     template_name = 'index.html'
     form_class = CompraModelForm
     success_url = reverse_lazy('relatorio_carteira')
+
 
     def get_context_data(self, **kwargs):
         nome_user = self.request.user
@@ -31,6 +29,7 @@ class CarteiraView(LoginRequiredMixin, FormView):
         context['carteira'] = [dict_contexto(x) for x in carteira['carteira'] if list(x.keys())[0] != 'caixa']
         return context
 
+
     def form_valid(self,form,*args,**kwargs):
         acao = form.save(commit=False)
         acao.usuario = self.request.user
@@ -38,9 +37,11 @@ class CarteiraView(LoginRequiredMixin, FormView):
         messages.success(self.request, 'Informação Salva')
         return super(CarteiraView, self).form_valid(form,*args,**kwargs)
 
+
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request,'Algo deu errado')
         return super(CarteiraView, self).form_valid(form,*args,**kwargs)
+
 
 def dict_contexto(dicionario):
     acao = list(dicionario.keys())[0]
@@ -87,3 +88,45 @@ class RelatorioImpostoRenda(LoginRequiredMixin, TemplateView):
         carteira = requests.get(url, headers=headers).json()
         context['ir'] = carteira
         return context  
+
+class CompraFormView(LoginRequiredMixin, FormView):
+    login_url = 'user/login/'
+    redirect_field_name = 'index'
+    template_name = 'index.html'
+    form_class = CompraModelForm
+    success_url = reverse_lazy('relatorio_carteira')
+
+    def form_valid(self,form,*args,**kwargs):
+        acao = form.save(commit=False)
+        acao.usuario = self.request.user
+        acao.save()
+        messages.success(self.request, 'Informação Salva')
+        return super(CompraFormView, self).form_valid(form,*args,**kwargs)
+
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request,'Algo deu errado')
+        return super(CompraFormView, self).form_valid(form,*args,**kwargs)
+
+
+class VendaFormView(LoginRequiredMixin, FormView):
+    login_url = 'user/login/'
+    redirect_field_name = 'index'
+    template_name = 'index.html'
+    form_class = VendaModelForm
+    success_url = reverse_lazy('relatorio_carteira')
+
+    def form_valid(self,form,*args,**kwargs):
+        acao = form.save(commit=False)
+        acao.usuario = self.request.user
+        acao.save()
+        print(acao)
+        messages.success(self.request, 'Informação Salva')
+        return super(VendaFormView, self).form_valid(form,*args,**kwargs)
+
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request,'Algo deu errado')
+        print(form)
+        return super(VendaFormView, self).form_valid(form,*args,**kwargs)
+

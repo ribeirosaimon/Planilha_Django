@@ -136,7 +136,6 @@ class Carteira:
         dict_patrimonio['patrimonio']['patrimonio_br'] = round(dict_patrimonio['acao']['posicao_br'] + dict_patrimonio['caixa']['caixa_br'],2)
         dict_patrimonio['patrimonio']['patrimonio_usa'] = round((dict_patrimonio['acao']['posicao_usa'] + dict_patrimonio['caixa']['caixa_usa']) * get_dolar_price(),2)
         dict_patrimonio['patrimonio']['patrimonio_total'] = round(dict_patrimonio['patrimonio']['patrimonio_usa'] + dict_patrimonio['patrimonio']['patrimonio_br'],2)
-        print(dict_patrimonio)
         return dict_patrimonio
 
 
