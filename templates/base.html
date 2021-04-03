@@ -11,12 +11,17 @@
 </head>
 <body class="text-center">
     {% if not user.is_anonymous %}
-    <div class="container">
+    
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
             <a class="btn btn-primary" href="{% url 'relatorio_carteira' %}"> Carteira </a>
             <a class="btn btn-primary" href="{% url 'analise_tecnica' %}"> Analise Técnica </a>
             <a class="btn btn-primary" href="{% url 'relatorio_ir' %}"> Relatorio Imposto de Renda </a>
+          <form class="d-flex">
             <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-    </div>
+          </form>
+        </div>
+      </nav>
     {% endif %}
     {% block content %}
     {% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="card text-center">
     <form class="form-signin" method="post" autocomplete="off">
         {% csrf_token %}
         <p>Carteira django </p>
@@ -12,4 +13,5 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
     </form>
+</div>
 {% endblock %}
