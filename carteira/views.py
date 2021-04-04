@@ -4,6 +4,7 @@ from compras.models import CompraModel
 from vendas.models import VendaModel
 from compras.serializers import CompraSerializers
 from .calculos.carteira_calc import Carteira
+from .calculos.lucro import correcao_carteira_com_peso
 
 
 class CarteiraView(viewsets.ViewSet):
@@ -14,10 +15,11 @@ class CarteiraView(viewsets.ViewSet):
         venda_model_user = VendaModel.objects.filter(usuario=request.user)
         carteira = Carteira(compra_model_user, venda_model_user)
         meu_portfolio = carteira.minha_carteira()
-        patrimonio = carteira.patrimonio(meu_portfolio)
+        patrimonio = carteira.patrimonio()
+        portfolio_atualizado = correcao_carteira_com_peso(meu_portfolio, patrimonio)
         return Response({
             'patrimonio':patrimonio,
-            'carteira':meu_portfolio
+            'carteira':portfolio_atualizado
             })
 
 

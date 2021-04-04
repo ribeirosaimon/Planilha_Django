@@ -40,7 +40,9 @@ def dict_contexto(dicionario):
         'qtd':dicionario[acao]['qtd'],
         'pos':dicionario[acao]['pos'],
         'lucro':dicionario[acao]['lucro'],
-        'preco_acao':dicionario[acao]['preco_acao']
+        'preco_acao':dicionario[acao]['preco_acao'],
+        'peso':dicionario[acao]['peso'],
+        'retorno_no_patrimonio':dicionario[acao]['retorno_no_patrimonio']
     }
     return dict_retorno
 

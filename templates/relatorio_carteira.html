@@ -13,9 +13,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ info.patrimonio.patrimonio.patrimonio_total }}</td>
-                    <td>{{ info.patrimonio.patrimonio.patrimonio_br }}</td>
-                    <td>{{ info.patrimonio.patrimonio.patrimonio_usa }}</td>
+                    <td>R$ {{ info.patrimonio.patrimonio.patrimonio_total.pos }}</td>
+                    <td>R$ {{ info.patrimonio.patrimonio.patrimonio_br.pos }}</td>
+                    <td>$ {{ info.patrimonio.patrimonio.patrimonio_usa.pos }}</td>
+                </tr>
+                <tr>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_total.peso }} %</td>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_br.peso }} %</td>
+                    <td>{{ info.patrimonio.patrimonio.patrimonio_usa.peso }} %</td>
                 </tr>
             </tbody>
         </table>
@@ -31,10 +36,33 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ info.patrimonio.caixa.caixa_total }}</td>
-                    <td>{{ info.patrimonio.caixa.caixa_br }}</td>
-                    <td>{{ info.patrimonio.caixa.caixa_usa }}</td>
+                    <td>R$ {{ info.patrimonio.caixa.caixa_total.pos }}</td>
+                    <td>R$ {{ info.patrimonio.caixa.caixa_br.pos }}</td>
+                    <td>$ {{ info.patrimonio.caixa.caixa_usa.pos }}</td>
                 </tr>
+                <tr>
+                    <td>{{ info.patrimonio.caixa.caixa_total.peso }} %</td>
+                    <td>{{ info.patrimonio.caixa.caixa_br.peso }} %</td>
+                    <td>{{ info.patrimonio.caixa.caixa_usa.peso }} %</td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th>Ações Total</th>
+                        <th>Ações no Brasil</th>
+                        <th>Ações nos Estados Unidos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R$ {{ info.patrimonio.acao.posicao_total.pos }}</td>
+                        <td>R$ {{ info.patrimonio.acao.posicao_br.pos }}</td>
+                        <td>$ {{ info.patrimonio.acao.posicao_usa.pos }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ info.patrimonio.acao.posicao_total.peso }} %</td>
+                        <td>{{ info.patrimonio.acao.posicao_br.peso }} %</td>
+                        <td>{{ info.patrimonio.acao.posicao_usa.peso }} %</td>
+                    </tr>
             </tbody>
         </table>
       </div>
@@ -45,24 +73,43 @@
             <thead>
                 <tr>
                     <th>Ação</th>
-                    <th>Nacional</th>
+                    <th>País</th>
                     <th>Preço Fechamento</th>
                     <th>Preço Médio</th>
                     <th>Quantidade</th>
                     <th>Posição</th>
                     <th>Lucro</th>
+                    <th>Peso</th>
+                    <th>Retorno</th>
                 </tr>
             </thead>
             <tbody>
                 {% for x in carteira %}
                 <tr>
-                    <td>{{ x.acao }}</td>
-                    <td>{{ x.nacional }}</td>
-                    <td>{{ x.preco_acao }}</td>
-                    <td>{{ x.pm }}</td>
+                    <td>{{ x.acao|upper }}</td>
+                    {% if x.nacional == True %}
+                    <td>&#127463;&#127479;</td>
+                    <td>R$ {{ x.preco_acao }}</td>
+                    <td>R$ {{ x.pm }}</td>
                     <td>{{ x.qtd }}</td>
-                    <td>{{ x.pos }}</td>
-                    <td>{{ x.lucro }}</td>
+                    <td>R$ {{ x.pos }}</td>
+                    <td>R$ {{ x.lucro }}</td>
+                    <td>{{ x.peso }} % </td>
+                    <td>{{ x.retorno_no_patrimonio }} %</td>
+
+                    {% else %}
+
+                    <td>&#127482;&#127480;</td>
+                    <td>$ {{ x.preco_acao }}</td>
+                    <td>$ {{ x.pm }}</td>
+                    <td>{{ x.qtd }}</td>
+                    <td>$ {{ x.pos }}</td>
+                    <td>$ {{ x.lucro }}</td>
+                    <td>{{ x.peso }} %</td>
+                    <td>{{ x.retorno_no_patrimonio }} %</td>
+                    
+                    {% endif %}
+
                 </tr>
                 {% endfor %}
             </tbody>

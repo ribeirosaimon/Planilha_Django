@@ -47,3 +47,25 @@ def calculo_de_volume(volume_medio,volume_diario,horario_comercial=8,inicio_expe
     else:
         dict_volume['dados']['high'] = False
     return dict_volume
+
+def correcao_carteira_com_peso(portfolio, patrimonio):
+    patrimonio_total = patrimonio['patrimonio']['patrimonio_total']['pos']
+    lista_retorno = []
+    for x in portfolio:
+        acao = list(x.keys())[0]
+        if acao == 'caixa':
+            posicao = round((float(x[acao]['pos']) / patrimonio_total * 100),1)
+            x[acao]['peso'] = posicao
+        if acao != 'caixa':
+            if x[acao]['nacional'] == True:
+                posicao = round((float(x[acao]['posicao_atual']) / patrimonio_total * 100),1)
+                retorno_total = round((float(x[acao]['lucro']) /  patrimonio_total) * 100,1)                
+                x[acao]['peso'] = posicao
+                x[acao]['retorno_no_patrimonio'] = retorno_total
+            else:
+                posicao = round(((float(x[acao]['posicao_atual']) * get_dolar_price()) / patrimonio_total * 100),1)
+                retorno_total = round((float(x[acao]['lucro']) / patrimonio_total * 100),1)
+                x[acao]['peso'] = posicao
+                x[acao]['retorno_no_patrimonio'] = retorno_total
+        lista_retorno.append(x)
+    return lista_retorno
