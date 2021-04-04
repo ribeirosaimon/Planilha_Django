@@ -34,7 +34,7 @@ def calculo_de_volume(volume_medio,volume_diario,horario_comercial=8,inicio_expe
     volume_medio_por_hora = int(round(volume_medio / horario_comercial,0))
     volume_medio_do_dia = volume_medio_por_hora * tempo_de_expediente
     if volume_diario != 0:
-        porcentagem_diferenca = round((volume_medio_do_dia/ volume_diario)-1,2)
+        porcentagem_diferenca = round(((volume_medio_do_dia/ volume_diario)-1) * 100,1)
     else:
         porcentagem_diferenca = 0
     dict_volume = {'volume':volume_diario,
