@@ -163,7 +163,7 @@ class Carteira:
             dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
         dict_patrimonio['acao']['posicao_br']['peso'] = round(dict_patrimonio['acao']['posicao_br']['pos'] /
             dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-        dict_patrimonio['acao']['posicao_usa']['peso'] = round(dict_patrimonio['acao']['posicao_usa']['pos'] /
+        dict_patrimonio['acao']['posicao_usa']['peso'] = round((dict_patrimonio['acao']['posicao_usa']['pos'] * get_dolar_price()) /
             dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
 
 
