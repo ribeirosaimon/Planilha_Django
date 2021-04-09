@@ -134,46 +134,47 @@ class Carteira:
                 if x[acao]['nacional'] == False:
                     dict_patrimonio['valor_investido']['valor_usa'] += round(float(x[acao]['pos']),2)
                     dict_patrimonio['acao']['posicao_usa']['pos'] += round(calculo_patrimonio(acao, x, self.precos_da_carteira),2)
-                    
-        dict_patrimonio['caixa']['caixa_total']['pos'] = round(dict_patrimonio['caixa']['caixa_br']['pos'] +
-            (dict_patrimonio['caixa']['caixa_usa']['pos'] * get_dolar_price()),2)
+        try:
+            dict_patrimonio['caixa']['caixa_total']['pos'] = round(dict_patrimonio['caixa']['caixa_br']['pos'] +
+                (dict_patrimonio['caixa']['caixa_usa']['pos'] * get_dolar_price()),2)
 
-        dict_patrimonio['acao']['posicao_total']['pos'] = round(dict_patrimonio['acao']['posicao_br']['pos'] +
-            (dict_patrimonio['acao']['posicao_usa']['pos'] * get_dolar_price()),2)
-        
-        dict_patrimonio['valor_investido']['valor_total'] = round(dict_patrimonio['valor_investido']['valor_br'] +
-            (dict_patrimonio['valor_investido']['valor_usa'] * get_dolar_price()),2)
-        
-        dict_patrimonio['patrimonio']['patrimonio_br']['pos'] = round(dict_patrimonio['acao']['posicao_br']['pos'] + dict_patrimonio['caixa']['caixa_br']['pos'],2)
-
-        dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] = round((dict_patrimonio['acao']['posicao_usa']['pos'] +
-            dict_patrimonio['caixa']['caixa_usa']['pos']) * get_dolar_price(),2)
-
-        dict_patrimonio['patrimonio']['patrimonio_total']['pos'] = round(dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] +
-            dict_patrimonio['patrimonio']['patrimonio_br']['pos'],2)
-
-        dict_patrimonio['patrimonio']['patrimonio_total']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_total']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
-        dict_patrimonio['patrimonio']['patrimonio_br']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_br']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
-        dict_patrimonio['patrimonio']['patrimonio_usa']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
-
-        dict_patrimonio['acao']['posicao_total']['peso'] = round(dict_patrimonio['acao']['posicao_total']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-        dict_patrimonio['acao']['posicao_br']['peso'] = round(dict_patrimonio['acao']['posicao_br']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-        dict_patrimonio['acao']['posicao_usa']['peso'] = round((dict_patrimonio['acao']['posicao_usa']['pos'] * get_dolar_price()) /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-
-
-        dict_patrimonio['caixa']['caixa_total']['peso'] = round(dict_patrimonio['caixa']['caixa_total']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-        dict_patrimonio['caixa']['caixa_usa']['peso'] = round((dict_patrimonio['caixa']['caixa_usa']['pos'] *
-            get_dolar_price()) / dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
-        dict_patrimonio['caixa']['caixa_br']['peso'] = round(dict_patrimonio['caixa']['caixa_usa']['pos'] /
-            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+            dict_patrimonio['acao']['posicao_total']['pos'] = round(dict_patrimonio['acao']['posicao_br']['pos'] +
+                (dict_patrimonio['acao']['posicao_usa']['pos'] * get_dolar_price()),2)
             
+            dict_patrimonio['valor_investido']['valor_total'] = round(dict_patrimonio['valor_investido']['valor_br'] +
+                (dict_patrimonio['valor_investido']['valor_usa'] * get_dolar_price()),2)
+            
+            dict_patrimonio['patrimonio']['patrimonio_br']['pos'] = round(dict_patrimonio['acao']['posicao_br']['pos'] + dict_patrimonio['caixa']['caixa_br']['pos'],2)
+
+            dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] = round((dict_patrimonio['acao']['posicao_usa']['pos'] +
+                dict_patrimonio['caixa']['caixa_usa']['pos']) * get_dolar_price(),2)
+
+            dict_patrimonio['patrimonio']['patrimonio_total']['pos'] = round(dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] +
+                dict_patrimonio['patrimonio']['patrimonio_br']['pos'],2)
+
+            dict_patrimonio['patrimonio']['patrimonio_total']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_total']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
+            dict_patrimonio['patrimonio']['patrimonio_br']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_br']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
+            dict_patrimonio['patrimonio']['patrimonio_usa']['peso'] = round((dict_patrimonio['patrimonio']['patrimonio_usa']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100),1) 
+
+            dict_patrimonio['acao']['posicao_total']['peso'] = round(dict_patrimonio['acao']['posicao_total']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+            dict_patrimonio['acao']['posicao_br']['peso'] = round(dict_patrimonio['acao']['posicao_br']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+            dict_patrimonio['acao']['posicao_usa']['peso'] = round((dict_patrimonio['acao']['posicao_usa']['pos'] * get_dolar_price()) /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+
+
+            dict_patrimonio['caixa']['caixa_total']['peso'] = round(dict_patrimonio['caixa']['caixa_total']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+            dict_patrimonio['caixa']['caixa_usa']['peso'] = round((dict_patrimonio['caixa']['caixa_usa']['pos'] *
+                get_dolar_price()) / dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+            dict_patrimonio['caixa']['caixa_br']['peso'] = round(dict_patrimonio['caixa']['caixa_usa']['pos'] /
+                dict_patrimonio['patrimonio']['patrimonio_total']['pos'] * 100,1) 
+        except:
+            pass
         return dict_patrimonio
 
 

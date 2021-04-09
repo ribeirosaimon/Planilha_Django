@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.urls import reverse_lazy
 import requests
 from django.conf import settings
-from .forms import CompraModelForm, VendaModelForm
+from .forms import CompraModelForm, VendaModelForm, CaixaModelForm
 from django.contrib import messages
 
 
@@ -110,13 +110,33 @@ class VendaFormView(LoginRequiredMixin, FormView):
         acao = form.save(commit=False)
         acao.usuario = self.request.user
         acao.save()
-        print(acao)
         messages.success(self.request, 'Informação Salva')
         return super(VendaFormView, self).form_valid(form,*args,**kwargs)
 
 
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request,'Algo deu errado')
-        print(form)
         return super(VendaFormView, self).form_valid(form,*args,**kwargs)
 
+
+class CaixaFormView(LoginRequiredMixin, FormView):
+    login_url = 'user/login/'
+    redirect_field_name = 'index'
+    template_name = 'index.html'
+    form_class = CaixaModelForm
+    success_url = reverse_lazy('relatorio_carteira')
+    def get_initial(self):
+        return {'nacional':True, 'quantidade':1}
+    def form_valid(self,form,*args,**kwargs):
+        #caixa = form.save(commit=False)
+        #caixa.usuario = self.request.user
+        #caixa.save()
+        #messages.success(self.request, 'Informação Salva')
+        return super(CaixaFormView, self).form_valid(form,*args,**kwargs)
+
+    
+    def form_invalid(self, form, *args, **kwargs):
+        print(form)
+        print('-----------------------------==')
+        messages.error(self.request,'Algo deu errado')
+        return super(VendaFormView, self).form_valid(form,*args,**kwargs)

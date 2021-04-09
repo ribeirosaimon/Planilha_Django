@@ -15,3 +15,9 @@ class VendaModelForm(forms.ModelForm):
     class Meta:
         model = VendaModel
         fields = ['data', 'nacional','acao','quantidade','preco_medio','preco_venda','dolar'] 
+
+
+class CaixaModelForm(forms.ModelForm):
+    class Meta:
+        model = CompraModel
+        fields = ['data', 'nacional','quantidade','preco_medio']
