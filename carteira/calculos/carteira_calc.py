@@ -281,6 +281,7 @@ class Carteira:
                 for index in range(0,tempo):
                     fechamento = valores['info'][index]['dados']['close']
                     fechamentos.append(fechamento)
+
         mma = sum(fechamentos) / tempo
         for x in range(tempo):
             calculo = (mma - fechamentos[x]) ** 2
@@ -288,9 +289,9 @@ class Carteira:
         desvio_padrao = (sum(lista_quadrados) / tempo) **0.5
         banda_superior = round(mma + (desvio_padrao * 2),2)
         banda_inferior = round(mma - (desvio_padrao * 2),2)
-        if fechamento < banda_inferior:
+        if fechamentos[0] < banda_inferior:
             dict_bolinger['bollinger'] = 'buy'
-        if fechamento > banda_superior:
+        if fechamentos[0] > banda_superior:
             dict_bolinger['bollinger'] = 'sell'
         dict_bolinger['dados']['top'] = banda_superior
         dict_bolinger['dados']['bottom'] = banda_inferior
