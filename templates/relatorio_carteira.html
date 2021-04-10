@@ -37,8 +37,8 @@
             <tbody>
                 <tr>
                     <td>R$ {{ info.patrimonio.caixa.caixa_total.pos }}</td>
-                    <td>R$ {{ info.patrimonio.caixa.caixa_br.pos }} <a class="fas fa-pen" href="{% url 'caixa_form' %}"></a></a></td>
-                    <td>$ {{ info.patrimonio.caixa.caixa_usa.pos }} <a class="fas fa-pen" href="{% url 'caixa_form' %}"></a></a></td>
+                    <td>R$ {{ info.patrimonio.caixa.caixa_br.pos }} <a class="fas fa-pen" href="{% url 'caixa_form_br' %}"></a></a></td>
+                    <td>$ {{ info.patrimonio.caixa.caixa_usa.pos }} <a class="fas fa-pen" href="{% url 'caixa_form_usa' %}"></a></a></td>
                 </tr>
                 <tr>
                     <td>{{ info.patrimonio.caixa.caixa_total.peso }} %</td>

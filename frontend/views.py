@@ -8,6 +8,7 @@ import requests
 from django.conf import settings
 from .forms import CompraModelForm, VendaModelForm, CaixaModelForm
 from django.contrib import messages
+from compras.models import CompraModel
 
 
 class CarteiraView(LoginRequiredMixin, FormView):
@@ -119,24 +120,46 @@ class VendaFormView(LoginRequiredMixin, FormView):
         return super(VendaFormView, self).form_valid(form,*args,**kwargs)
 
 
-class CaixaFormView(LoginRequiredMixin, FormView):
+class CaixaBRFormView(LoginRequiredMixin, FormView):
     login_url = 'user/login/'
     redirect_field_name = 'index'
     template_name = 'index.html'
     form_class = CaixaModelForm
     success_url = reverse_lazy('relatorio_carteira')
-    def get_initial(self):
-        return {'nacional':True, 'quantidade':1}
-    def form_valid(self,form,*args,**kwargs):
-        #caixa = form.save(commit=False)
-        #caixa.usuario = self.request.user
-        #caixa.save()
-        #messages.success(self.request, 'Informação Salva')
-        return super(CaixaFormView, self).form_valid(form,*args,**kwargs)
 
-    
+    def form_valid(self,form,*args,**kwargs):
+        caixa = form.save(commit=False)
+        self.queryset = CompraModel.objects.filter(acao='caixa', nacional=True).first()
+        self.queryset.data = caixa.data
+        self.queryset.preco_medio = caixa.preco_medio
+        self.queryset.usuario = self.request.user
+        self.queryset.save()
+        messages.success(self.request, 'Informação Salva')
+        return super(CaixaBRFormView, self).form_valid(form,*args,**kwargs)
+
+
     def form_invalid(self, form, *args, **kwargs):
-        print(form)
-        print('-----------------------------==')
         messages.error(self.request,'Algo deu errado')
-        return super(VendaFormView, self).form_valid(form,*args,**kwargs)
+        return super(CaixaBRFormView, self).form_valid(form,*args,**kwargs)
+
+class CaixaUSAFormView(LoginRequiredMixin, FormView):
+    login_url = 'user/login/'
+    redirect_field_name = 'index'
+    template_name = 'index.html'
+    form_class = CaixaModelForm
+    success_url = reverse_lazy('relatorio_carteira')
+
+    def form_valid(self,form,*args,**kwargs):
+        caixa = form.save(commit=False)
+        self.queryset = CompraModel.objects.filter(acao='caixa', nacional=False).first()
+        self.queryset.data = caixa.data
+        self.queryset.preco_medio = caixa.preco_medio
+        self.queryset.usuario = self.request.user
+        self.queryset.save()
+        messages.success(self.request, 'Informação Salva')
+        return super(CaixaUSAFormView, self).form_valid(form,*args,**kwargs)
+
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request,'Algo deu errado')
+        return super(CaixaUSAFormView, self).form_valid(form,*args,**kwargs)
