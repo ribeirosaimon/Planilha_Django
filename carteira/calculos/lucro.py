@@ -23,14 +23,18 @@ def calculo_patrimonio(acao, lista_info, precos_da_carteira):
     return round(patrimonio,2)
 
 
-def calculo_de_volume(volume_medio,volume_diario,horario_comercial=8,inicio_expediente=10):
+def calculo_de_volume(volume_medio,volume_diario,horario_comercial=7,inicio_expediente=10):
     hora_do_dia = int(datetime.now().strftime('%H'))
     minuto_do_dia = int(datetime.now().strftime('%M'))
     if minuto_do_dia > 45:
         hora_do_dia = hora_do_dia + 1
     tempo_de_expediente = hora_do_dia - inicio_expediente
-    if 0 > tempo_de_expediente or tempo_de_expediente > 8:
-        tempo_de_expediente = 8
+    if 0 > tempo_de_expediente or tempo_de_expediente > horario_comercial:
+        tempo_de_expediente = horario_comercial
+    #se o dia for sabado ou domingo
+    dia_de_hoje = datetime.today().weekday()
+    if dia_de_hoje >= 5:
+        tempo_de_expediente = horario_comercial
     volume_medio_por_hora = int(round(volume_medio / horario_comercial,0))
     volume_medio_do_dia = volume_medio_por_hora * tempo_de_expediente
     if volume_diario != 0:

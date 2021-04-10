@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'carteira',
     'compras',
     'vendas',
+    'relatorio_carteira',
 
     'frontend'
 ]
