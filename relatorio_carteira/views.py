@@ -2,9 +2,13 @@ from rest_framework import viewsets
 
 from rest_framework.response import Response
 from .serializers import PatrimonioSerializers
-from .models import PatrimonioModel
-from .relatorios.salvar_db import *
 
+from compras.models import CompraModel
+from vendas.models import VendaModel
+from .models import PatrimonioModel
+
+from .relatorios.salvar_db import *
+from carteira.calculos.carteira_calc import Carteira
 
 class PatrimonioViews(viewsets.ViewSet):
     queryset = PatrimonioModel.objects.all()
@@ -25,6 +29,10 @@ class RelatorioPatrimonioViews(viewsets.ViewSet):
     serializer_class = PatrimonioSerializers
 
     def list(self, request):
-        queryset = self.queryset.filter(usuario = request.user)
-        serializer = PatrimonioSerializers(queryset, many=True)
-        return Response(serializer.data)
+        compra_model_user = CompraModel.objects.filter(usuario=request.user)
+        venda_model_user = VendaModel.objects.filter(usuario=request.user)
+        carteira = Carteira(compra_model_user, venda_model_user)
+        volatilidade_implicita = carteira.vol_implicita()
+        return Response({
+            'volatilidade': volatilidade_implicita
+            })
