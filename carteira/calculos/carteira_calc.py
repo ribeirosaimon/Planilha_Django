@@ -336,17 +336,49 @@ class Carteira:
             if acao == valores['acao']:
                 return valores['info'][0]['dados']['close']
 
-    def vol_implicita(self):
-        maxima, minima, close, abertura = range(0,4)
+    def candle_patrimonio_diario(self):
+        dict_resposta = {
+            'candle_br':
+            {
+                'maxima':0,
+                'minima':0,
+                'open':0,
+                'close':0
+            },
+            'candle_usa':
+            {
+                'maxima':0,
+                'minima':0,
+                'open':0,
+                'close':0
+            },
+            'candle_total':
+            {
+                'maxima':0,
+                'minima':0,
+                'open':0,
+                'close':0
+            }
+        }
+        maxima_br, minima_br, close_br, abertura_br = range(0,4)
+        maxima_usa, minima_usa, close_usa, abertura_usa = range(0,4)
         portfolio = self.carteira['compras']
         for _ in portfolio:
             acao = list(_.keys())[0]
             if acao == 'caixa':
                 caixa = float(_['caixa']['pos'])
-                maxima += caixa
-                minima += caixa
-                close += caixa
-                abertura += caixa
+                if _[acao]['nacional'] == False:
+                    dict_resposta['candle_usa']['maxima'] += caixa
+                    dict_resposta['candle_usa']['minima'] += caixa
+                    dict_resposta['candle_usa']['close'] += caixa
+                    dict_resposta['candle_usa']['open'] += caixa
+                elif _[acao]['nacional'] == True:
+                    dict_resposta['candle_br']['maxima'] += caixa
+                    dict_resposta['candle_br']['minima'] += caixa
+                    dict_resposta['candle_br']['close'] += caixa
+                    dict_resposta['candle_br']['open'] += caixa
+
+
             for x in self.precos_da_carteira:
                 if acao == x['acao']:
                     quantidade = _[acao]['qtd']
@@ -354,21 +386,34 @@ class Carteira:
                     minima_acao = x['info'][0]['dados']['min'] * quantidade
                     fechamento_acao = x['info'][0]['dados']['close'] * quantidade
                     abertura_acao = x['info'][0]['dados']['open'] * quantidade
+
                     if _[acao]['nacional'] == False:
                         maxima_acao *= get_dolar_price()
                         minima_acao *= get_dolar_price()
                         fechamento_acao *= get_dolar_price()
                         abertura_acao *= get_dolar_price()
-                    maxima += maxima_acao
-                    minima += minima_acao
-                    close += fechamento_acao
-                    abertura += abertura_acao
-        return {
-            'candle_diario_carteira':
-            {
-                'maxima':round(maxima,2),
-                'minima':round(minima,2),
-                'open':round(abertura,2),
-                'close':round(close,2)
-            }
-        }
+                        
+                        dict_resposta['candle_usa']['maxima'] += maxima_acao
+                        dict_resposta['candle_usa']['minima'] += minima_acao
+                        dict_resposta['candle_usa']['close'] += fechamento_acao
+                        dict_resposta['candle_usa']['open'] += abertura_acao
+
+                    elif _[acao]['nacional'] == True:
+                        dict_resposta['candle_br']['maxima'] += maxima_acao
+                        dict_resposta['candle_br']['minima'] += minima_acao
+                        dict_resposta['candle_br']['close'] += fechamento_acao
+                        dict_resposta['candle_br']['open'] += abertura_acao
+        dict_resposta['candle_total']['maxima'] = round(dict_resposta['candle_br']['maxima'] + dict_resposta['candle_usa']['maxima'],2)
+        dict_resposta['candle_total']['minima'] = round(dict_resposta['candle_br']['minima'] + dict_resposta['candle_usa']['minima'],2)
+        dict_resposta['candle_total']['close'] = round(dict_resposta['candle_br']['close'] + dict_resposta['candle_usa']['close'],2)
+        dict_resposta['candle_total']['open'] = round(dict_resposta['candle_br']['open'] + dict_resposta['candle_usa']['open'],2)
+        # colocando todas as info com 2 decimal
+        dict_resposta['candle_br']['maxima'] = round(dict_resposta['candle_br']['maxima'],2)
+        dict_resposta['candle_br']['minima'] = round(dict_resposta['candle_br']['minima'],2)
+        dict_resposta['candle_br']['close'] = round(dict_resposta['candle_br']['close'],2)
+        dict_resposta['candle_br']['open'] = round(dict_resposta['candle_br']['open'],2)
+        dict_resposta['candle_usa']['maxima'] = round(dict_resposta['candle_usa']['maxima'],2)
+        dict_resposta['candle_usa']['minima'] = round(dict_resposta['candle_usa']['minima'],2)
+        dict_resposta['candle_usa']['close'] = round(dict_resposta['candle_usa']['close'],2)
+        dict_resposta['candle_usa']['open'] = round(dict_resposta['candle_usa']['open'],2)
+        return dict_resposta

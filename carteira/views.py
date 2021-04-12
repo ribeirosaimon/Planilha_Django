@@ -5,7 +5,7 @@ from vendas.models import VendaModel
 from compras.serializers import CompraSerializers
 from .calculos.carteira_calc import Carteira
 from .calculos.lucro import correcao_carteira_com_peso
-
+from relatorio_carteira.relatorios.salvar_db import *
 
 class CarteiraView(viewsets.ViewSet):
     queryset = CompraModel.objects.all()
@@ -17,6 +17,7 @@ class CarteiraView(viewsets.ViewSet):
         meu_portfolio = carteira.minha_carteira()
         patrimonio = carteira.patrimonio()
         portfolio_atualizado = correcao_carteira_com_peso(meu_portfolio, patrimonio)
+        salvar_em_banco(patrimonio)
         return Response({
             'patrimonio':patrimonio,
             'carteira':portfolio_atualizado
