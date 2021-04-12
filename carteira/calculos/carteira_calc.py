@@ -335,3 +335,40 @@ class Carteira:
         for valores in self.precos_da_carteira:
             if acao == valores['acao']:
                 return valores['info'][0]['dados']['close']
+
+    def vol_implicita(self):
+        maxima, minima, close, abertura = range(0,4)
+        portfolio = self.carteira['compras']
+        for _ in portfolio:
+            acao = list(_.keys())[0]
+            if acao == 'caixa':
+                caixa = float(_['caixa']['pos'])
+                maxima += caixa
+                minima += caixa
+                close += caixa
+                abertura += caixa
+            for x in self.precos_da_carteira:
+                if acao == x['acao']:
+                    quantidade = _[acao]['qtd']
+                    maxima_acao = x['info'][0]['dados']['max'] * quantidade
+                    minima_acao = x['info'][0]['dados']['min'] * quantidade
+                    fechamento_acao = x['info'][0]['dados']['close'] * quantidade
+                    abertura_acao = x['info'][0]['dados']['open'] * quantidade
+                    if _[acao]['nacional'] == False:
+                        maxima_acao *= get_dolar_price()
+                        minima_acao *= get_dolar_price()
+                        fechamento_acao *= get_dolar_price()
+                        abertura_acao *= get_dolar_price()
+                    maxima += maxima_acao
+                    minima += minima_acao
+                    close += fechamento_acao
+                    abertura += abertura_acao
+        return {
+            'candle_diario_carteira':
+            {
+                'maxima':round(maxima,2),
+                'minima':round(minima,2),
+                'open':round(abertura,2),
+                'close':round(close,2)
+            }
+        }
