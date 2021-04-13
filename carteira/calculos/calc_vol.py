@@ -6,8 +6,8 @@ class Volatilidade():
 
     def resposta_classe(self):
         return {
-            'rentabilidade_diaria':self.rentabilidade_diaria(),
-            'rentabilidade_anual':self.rentabilidade_diaria(anual=True)
+            'volatilidade_diaria':self.rentabilidade_diaria(),
+            'volatilidade_anual':self.rentabilidade_diaria(anual=True)
             }
         
 

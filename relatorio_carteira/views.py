@@ -39,6 +39,7 @@ class RelatorioPatrimonioViews(viewsets.ViewSet):
         
         return Response(
             {
-            'volatilidade':vol.resposta_classe()
+            'volatilidade':vol.resposta_classe(),
+            'candle_carteira':candle_carteira,
             }
         )
