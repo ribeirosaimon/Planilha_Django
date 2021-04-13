@@ -163,3 +163,18 @@ class CaixaUSAFormView(LoginRequiredMixin, FormView):
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request,'Algo deu errado')
         return super(CaixaUSAFormView, self).form_valid(form,*args,**kwargs)
+
+class PatrimonioView(LoginRequiredMixin, TemplateView):
+    login_url = 'user/login/'
+    redirect_field_name = 'relatorio_ir'
+    template_name = 'patrimonio.html'
+
+    def get_context_data(self, **kwargs):
+        nome_user = self.request.user
+        token = Token.objects.get(user=nome_user)
+        context = super(PatrimonioView, self).get_context_data(**kwargs)
+        url = f'{settings.URL_BASE}/api/v1/relatorio/patrimonio'
+        headers = {'Authorization': f'Token {token}'}
+        patrimonio = requests.get(url, headers=headers).json()
+        context['patrimonio'] = patrimonio
+        return context  

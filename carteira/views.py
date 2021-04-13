@@ -17,7 +17,7 @@ class CarteiraView(viewsets.ViewSet):
         meu_portfolio = carteira.minha_carteira()
         patrimonio = carteira.patrimonio()
         portfolio_atualizado = correcao_carteira_com_peso(meu_portfolio, patrimonio)
-        salvar_em_banco(patrimonio)
+        salvar_em_banco(patrimonio, request.user)
         return Response({
             'patrimonio':patrimonio,
             'carteira':portfolio_atualizado

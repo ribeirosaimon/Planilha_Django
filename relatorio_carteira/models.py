@@ -21,4 +21,4 @@ class PatrimonioModel(Base):
     patrimonio_usa = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.acao
+        return f'{self.data}'

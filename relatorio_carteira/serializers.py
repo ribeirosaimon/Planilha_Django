@@ -9,5 +9,5 @@ class PatrimonioSerializers(serializers.ModelSerializer):
             'data',
             'patrimonio_total',
             'patrimonio_br',
-            'patrimonio_total'
+            'patrimonio_usa'
         )

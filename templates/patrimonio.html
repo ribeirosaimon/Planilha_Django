@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="3"  >Lucro Mensal</th>
+                </tr>
+                <tr>
+                    <th>Lucro Total</th>
+                    <th>Lucro Brasil</th>
+                    <th>Lucro USA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_total }}</td>
+                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_br }}</td>
+                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_usa }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="2"  >Movimentação Mensal</th>
+                </tr>
+                <tr>
+                    <th>Movimentação Brasil</th>
+                    <th>Movimentação USA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.movimentacao.mov_br }}</td>
+                    <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.movimentacao.mov_usa }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2"  >Pagamento DARF</th>
+                    </tr>
+                    <tr>
+                        <th>DARF Brasil</th>
+                        <th>DARF USA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R$ {{ ir.relatorio.imposto_de_renda.pagamento.darf.darf_br }}</td>
+                        <td>R$ {{ ir.relatorio.imposto_de_renda.pagamento.darf.darf_usa }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Isenção Movimentação</th>
+                    </tr>
+                    <tr>
+                        <th>Movimentação restante Brasil</th>
+                        <th>Movimentação restante USA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.isencao_mov.isento_br }}</td>
+                        <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.isencao_mov.isento_usa }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

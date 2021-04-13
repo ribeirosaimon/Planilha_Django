@@ -11,7 +11,7 @@ from .relatorios.salvar_db import *
 from carteira.calculos.carteira_calc import Carteira
 from carteira.calculos.calc_vol import Volatilidade
 
-class PatrimonioViews(viewsets.ViewSet):
+class PatrimonioViews(viewsets.ModelViewSet):
     queryset = PatrimonioModel.objects.all()
     serializer_class = PatrimonioSerializers
 
