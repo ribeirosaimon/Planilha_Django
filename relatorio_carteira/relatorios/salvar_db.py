@@ -19,27 +19,39 @@ def salvar_em_banco(info, user, candle_carteira):
 
 
     patrimonio = PatrimonioModel.objects.order_by('criacao')
-    if len(patrimonio) == 0 or patrimonio[0].data != data_atual:
-        patrimonio_obj = PatrimonioModel(
-            usuario = user,
-            data=data_atual,
-            patrimonio_total=patrimonio_total,
-            patrimonio_br=patrimonio_br,
-            patrimonio_usa=patrimonio_usa,
-            vol_total=vol_total,
-            vol_br=vol_br,
-            vol_usa=vol_usa
-            )
-        #patrimonio_obj.save()
-    if patrimonio[0].data == data_atual:
-        patr_model = PatrimonioModel.objects.filter(data=data_atual).first()
 
-        patr_model.patrimonio_total = patrimonio_total
-        patr_model.patrimonio_br = patrimonio_br
-        patr_model.patrimonio_usa = patrimonio_usa
+    if len(patrimonio) == 0:
+        salvar_patrimonio(user, data_atual, patrimonio_total, patrimonio_br, patrimonio_usa, vol_total, vol_br, vol_usa)
 
-        patr_model.vol_total = vol_total
-        patr_model.vol_br = vol_br
-        patr_model.vol_usa = vol_usa
+    try:
+        if patrimonio[0].data != data_atual:
+            salvar_patrimonio(user, data_atual, patrimonio_total, patrimonio_br, patrimonio_usa, vol_total, vol_br, vol_usa)
+            
+        if patrimonio[0].data == data_atual:
+            patr_model = PatrimonioModel.objects.filter(data=data_atual).first()
 
-        patr_model.save()
+            patr_model.patrimonio_total = patrimonio_total
+            patr_model.patrimonio_br = patrimonio_br
+            patr_model.patrimonio_usa = patrimonio_usa
+
+            patr_model.vol_total = vol_total
+            patr_model.vol_br = vol_br
+            patr_model.vol_usa = vol_usa
+
+            patr_model.save()
+    except:
+        print('Deu algum problema')
+
+
+def salvar_patrimonio(user, data_atual, patrimonio_total, patrimonio_br, patrimonio_usa, vol_total, vol_br, vol_usa):
+    patrimonio_obj = PatrimonioModel(
+    usuario = user,
+    data=data_atual,
+    patrimonio_total=patrimonio_total,
+    patrimonio_br=patrimonio_br,
+    patrimonio_usa=patrimonio_usa,
+    vol_total=vol_total,
+    vol_br=vol_br,
+    vol_usa=vol_usa
+    )
+    patrimonio_obj.save()
