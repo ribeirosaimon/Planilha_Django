@@ -177,4 +177,19 @@ class PatrimonioView(LoginRequiredMixin, TemplateView):
         headers = {'Authorization': f'Token {token}'}
         patrimonio = requests.get(url, headers=headers).json()
         context['patrimonio'] = patrimonio
+        return context
+
+class PatrimonioHistoricoView(LoginRequiredMixin, TemplateView):
+    login_url = 'user/login/'
+    redirect_field_name = 'relatorio_ir'
+    template_name = 'patrimonio.html'
+
+    def get_context_data(self, **kwargs):
+        nome_user = self.request.user
+        token = Token.objects.get(user=nome_user)
+        context = super(PatrimonioHistoricoView, self).get_context_data(**kwargs)
+        url = f'{settings.URL_BASE}/api/v1/patrimonio'
+        headers = {'Authorization': f'Token {token}'}
+        patrimonio = requests.get(url, headers=headers).json()
+        context['patrimonio'] = patrimonio
         return context  

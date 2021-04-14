@@ -35,7 +35,7 @@ class RelatorioPatrimonioViews(viewsets.ViewSet):
         venda_model_user = VendaModel.objects.filter(usuario=request.user)
         carteira = Carteira(compra_model_user, venda_model_user)
         candle_carteira = carteira.candle_patrimonio_diario()
-        vol = Volatilidade(candle_carteira)
+        vol = Volatilidade(candle_carteira, len(self.queryset))
         
         return Response(
             {

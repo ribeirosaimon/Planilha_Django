@@ -6,7 +6,6 @@ from decimal import Decimal
 def salvar_em_banco(info, user, candle_carteira):
     vol = Volatilidade(candle_carteira).resposta_classe()
 
-
     data_atual = date.today()
     patrimonio_total = info['patrimonio']['patrimonio_total']['pos']
     patrimonio_br = info['patrimonio']['patrimonio_br']['pos']
@@ -18,7 +17,7 @@ def salvar_em_banco(info, user, candle_carteira):
     vol_usa = Decimal(vol['volatilidade_diaria']['rent_usa'])
 
 
-    patrimonio = PatrimonioModel.objects.order_by('criacao')
+    patrimonio = PatrimonioModel.objects.order_by('-criacao')
 
     if len(patrimonio) == 0:
         salvar_patrimonio(user, data_atual, patrimonio_total, patrimonio_br, patrimonio_usa, vol_total, vol_br, vol_usa)
@@ -26,6 +25,8 @@ def salvar_em_banco(info, user, candle_carteira):
     try:
         if patrimonio[0].data != data_atual:
             salvar_patrimonio(user, data_atual, patrimonio_total, patrimonio_br, patrimonio_usa, vol_total, vol_br, vol_usa)
+            print(f'Informação Salva na data de {patrimonio[0].data}')
+
             
         if patrimonio[0].data == data_atual:
             patr_model = PatrimonioModel.objects.filter(data=data_atual).first()
@@ -39,6 +40,7 @@ def salvar_em_banco(info, user, candle_carteira):
             patr_model.vol_usa = vol_usa
 
             patr_model.save()
+            print(f'Informação Editada na data de {patrimonio[0].data}')
     except:
         print('Deu algum problema')
 

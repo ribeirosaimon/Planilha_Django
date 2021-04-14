@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 
-from .views import CarteiraView, AnaliseTecnicaView, RelatorioImpostoRenda, CompraFormView, VendaFormView, CaixaBRFormView, CaixaUSAFormView, PatrimonioView
+from .views import CarteiraView, AnaliseTecnicaView, RelatorioImpostoRenda, CompraFormView, VendaFormView, CaixaBRFormView, CaixaUSAFormView, PatrimonioView, PatrimonioHistoricoView
 
 urlpatterns = [
     path('',TemplateView.as_view(template_name='index.html'),name='index'),
@@ -13,5 +13,6 @@ urlpatterns = [
     path('caixabr/', CaixaBRFormView.as_view(template_name='caixa_form.html'), name='caixa_form_br'),
     path('caixausa/', CaixaUSAFormView.as_view(template_name='caixa_form.html'), name='caixa_form_usa'),
     path('patrimonio/', PatrimonioView.as_view(template_name='patrimonio.html'), name='patrimonio'),
+    path('historico_patrimonio/', PatrimonioHistoricoView.as_view(template_name='historico_patrimonio.html'), name='historico_patrimonio'),
     path('user/',include('django.contrib.auth.urls')),
 ]

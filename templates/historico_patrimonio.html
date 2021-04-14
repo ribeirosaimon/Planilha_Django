@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="4">Histórico de Volatilidade Média</th>
+                    </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Patrimonio</th>
+                        <th>Patrimonio Brasil</th>
+                        <th>Patrimonio USA</th>
+                        <th>Volatilidade</th>
+                        <th>Volatilidade Brasil</th>
+                        <th>Volatilidade USA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in patrimonio %}
+                    <tr>
+                        <td>{{ x.data }}</td>
+                        <td>{{ x.patrimonio_total }}</td>
+                        <td>{{ x.patrimonio_br }}</td>
+                        <td>{{ x.patrimonio_usa }}</td>
+                        <td>{{ x.vol_total }}</td>
+                        <td>{{ x.vol_br }}</td>
+                        <td>{{ x.vol_usa }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

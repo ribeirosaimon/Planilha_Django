@@ -6,38 +6,39 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th colspan="3"  >Lucro Mensal</th>
+                    <th colspan="4">Variação do Patrimonio</th>
                 </tr>
                 <tr>
-                    <th>Lucro Total</th>
-                    <th>Lucro Brasil</th>
-                    <th>Lucro USA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_total }}</td>
-                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_br }}</td>
-                    <td>R$ {{ ir.relatorio.imposto_de_renda.lucro_mensal.lucro.lucro_usa }}</td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
-      <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th colspan="2"  >Movimentação Mensal</th>
-                </tr>
-                <tr>
-                    <th>Movimentação Brasil</th>
-                    <th>Movimentação USA</th>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Brasil</th>
+                    <th>USA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.movimentacao.mov_br }}</td>
-                    <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.movimentacao.mov_usa }}</td>
+                    <th>Fechamento</th>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_total.close }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_br.close }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_usa.close }}</td>
+                </tr>
+                <tr>
+                    <th>Abertura</th>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_total.open }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_br.open }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_usa.open }}</td>
+                </tr>
+                <tr>
+                    <th>Máxima</th>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_total.maxima }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_br.maxima }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_usa.maxima }}</td>
+                </tr>
+                <tr>
+                    <th>Mínima</th>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_total.minima }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_br.minima }}</td>
+                    <td>R$ {{ patrimonio.candle_carteira.candle_usa.minima }}</td>
                 </tr>
             </tbody>
         </table>
@@ -48,17 +49,27 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th colspan="2"  >Pagamento DARF</th>
+                        <th colspan="4">Volatilidade da Carteira</th>
                     </tr>
                     <tr>
-                        <th>DARF Brasil</th>
-                        <th>DARF USA</th>
+                        <th></th>
+                        <th>Total</th>
+                        <th>Brasil</th>
+                        <th>USA</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>R$ {{ ir.relatorio.imposto_de_renda.pagamento.darf.darf_br }}</td>
-                        <td>R$ {{ ir.relatorio.imposto_de_renda.pagamento.darf.darf_usa }}</td>
+                        <th>Vol Diária</th>
+                        <td>{{ patrimonio.volatilidade.volatilidade_diaria.rent_total }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_diaria.rent_br }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_diaria.rent_usa }}% </td>
+                    </tr>
+                    <tr>
+                        <th>Vol Anual</th>
+                        <td>{{ patrimonio.volatilidade.volatilidade_anual.rent_total }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_anual.rent_br }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_anual.rent_usa }}% </td>
                     </tr>
                 </tbody>
             </table>
@@ -67,20 +78,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th colspan="2">Isenção Movimentação</th>
+                        <th colspan="4">Volatilidade Média</th>
                     </tr>
                     <tr>
-                        <th>Movimentação restante Brasil</th>
-                        <th>Movimentação restante USA</th>
+                        <th>Total</th>
+                        <th>Brasil</th>
+                        <th>USA</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.isencao_mov.isento_br }}</td>
-                        <td>R$ {{ ir.relatorio.imposto_de_renda.mov_mensal.isencao_mov.isento_usa }}</td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_media.rent_total }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_media.rent_br }}% </td>
+                        <td>{{ patrimonio.volatilidade.volatilidade_media.rent_usa }}% </td>
                     </tr>
                 </tbody>
             </table>
+            <a class="btn btn-primary" href="{% url 'historico_patrimonio' %}"> Histórico </a>
         </div>
     </div>
 </div>
