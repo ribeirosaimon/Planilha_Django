@@ -191,5 +191,5 @@ class PatrimonioHistoricoView(LoginRequiredMixin, TemplateView):
         url = f'{settings.URL_BASE}/api/v1/patrimonio'
         headers = {'Authorization': f'Token {token}'}
         patrimonio = requests.get(url, headers=headers).json()
-        context['patrimonio'] = patrimonio
+        context['patrimonio'] = patrimonio[::-1]
         return context  
