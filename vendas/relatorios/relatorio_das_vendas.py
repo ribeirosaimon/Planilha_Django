@@ -96,3 +96,18 @@ class RelatorioVendas():
         if dict_mov['isencao_mov']['isento_usa'] < 0:
             dict_mov['isencao_mov']['isento_usa'] = 0
         return dict_mov
+
+    def relatorio_de_vendas(self):
+        dict_mensal = dict()
+        vendas_model = VendaModel.objects.filter(usuario=self.usuario)
+
+        for _ in range(1,13):
+            vendas_model = VendaModel.objects.filter(usuario=self.usuario)
+            vendas_por_usuario = [x for x in vendas_model if x.data.month == _ and
+                x.data.year == self.ano]
+            dict_mov_mensal = self.movimentacao_mensal(vendas_por_usuario)
+            darf = self.pagamento_de_imposto(dict_mov_mensal, self.calcular_lucro(vendas_por_usuario))
+            dict_mensal[_] = darf
+        return dict_mensal
+
+

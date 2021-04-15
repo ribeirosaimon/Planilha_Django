@@ -33,6 +33,7 @@ class Carteira:
         for x in range(len(portfolio)):
             acao = list(portfolio[x].keys())[0]
             if acao != 'caixa':
+                /
                 portfolio[x][acao]['lucro'] = calc_lucro(portfolio[x], self.precos_da_carteira)
                 portfolio[x][acao]['preco_acao'] = self.preco_acao(acao)
                 portfolio[x][acao]['posicao_atual'] = round(self.preco_acao(acao) * float(portfolio[x][acao]['qtd']),2)
@@ -91,8 +92,8 @@ class Carteira:
                                 pos = acao[1].preco_medio * acao[1].quantidade
                                 x[acao[1].acao]['pos'] -= pos
                                 x[acao[1].acao]['qtd']-= acao[1].quantidade
-            for x in self.carteira['compras']:    
-                if x[list(x.keys())[0]]['pos'] <= 0:
+            for x in self.carteira['compras']:       
+                if x[list(x.keys())[0]]['qtd'] <= 0:
                     self.carteira['compras'].remove(x)
         
     def patrimonio(self):

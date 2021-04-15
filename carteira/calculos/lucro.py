@@ -10,8 +10,8 @@ def calc_lucro(acao, info_das_acoes):
     quantidade = acao[list((acao.keys()))[0]]['qtd']
     posicao = acao[list((acao.keys()))[0]]['pos']
     lucro = (preco * quantidade) - float(posicao)
-    if acao[list((acao.keys()))[0]]['nacional'] == False:
-        lucro *= get_dolar_price()
+    #if acao[list((acao.keys()))[0]]['nacional'] == False:
+    #    lucro *= get_dolar_price()
     return round(lucro, 2)
 
 def calculo_patrimonio(acao, lista_info, precos_da_carteira):
