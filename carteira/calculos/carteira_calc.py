@@ -33,7 +33,7 @@ class Carteira:
         for x in range(len(portfolio)):
             acao = list(portfolio[x].keys())[0]
             if acao != 'caixa':
-                /
+                    
                 portfolio[x][acao]['lucro'] = calc_lucro(portfolio[x], self.precos_da_carteira)
                 portfolio[x][acao]['preco_acao'] = self.preco_acao(acao)
                 portfolio[x][acao]['posicao_atual'] = round(self.preco_acao(acao) * float(portfolio[x][acao]['qtd']),2)

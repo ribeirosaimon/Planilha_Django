@@ -107,7 +107,7 @@ class RelatorioVendas():
                 x.data.year == self.ano]
             dict_mov_mensal = self.movimentacao_mensal(vendas_por_usuario)
             darf = self.pagamento_de_imposto(dict_mov_mensal, self.calcular_lucro(vendas_por_usuario))
-            dict_mensal[_] = darf
+            dict_mensal[_] = darf, dict_mov_mensal
         return dict_mensal
 
 
