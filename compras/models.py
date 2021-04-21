@@ -16,7 +16,7 @@ class CompraModel(Base):
     data = models.DateField()
     nacional = models.BooleanField()
     acao = models.CharField(max_length=10)
-    quantidade = models.IntegerField()
+    quantidade = models.DecimalField(max_digits=10, decimal_places=2)
     preco_medio = models.DecimalField(max_digits=10, decimal_places=2)
 
 

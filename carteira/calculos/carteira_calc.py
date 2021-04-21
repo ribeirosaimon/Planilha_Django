@@ -382,7 +382,7 @@ class Carteira:
 
             for x in self.precos_da_carteira:
                 if acao == x['acao']:
-                    quantidade = _[acao]['qtd']
+                    quantidade = float(_[acao]['qtd'])
                     maxima_acao = x['info'][0]['dados']['max'] * quantidade
                     minima_acao = x['info'][0]['dados']['min'] * quantidade
                     fechamento_acao = x['info'][0]['dados']['close'] * quantidade
