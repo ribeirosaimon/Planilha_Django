@@ -25,20 +25,22 @@ class Volatilidade():
         calc = self.dict_patrimonio['candle_total']['close'] - self.dict_patrimonio['candle_total']['open']
         calc_br = self.dict_patrimonio['candle_br']['close'] - self.dict_patrimonio['candle_br']['open']
         calc_usa = self.dict_patrimonio['candle_usa']['close'] - self.dict_patrimonio['candle_usa']['open']
-        
-        dict_rent['rent_total'] = round((calc / self.dict_patrimonio['candle_total']['open'])*100,4)
-        dict_rent['rent_br'] = round((calc_br / self.dict_patrimonio['candle_br']['open'])*100,4)
-        dict_rent['rent_usa'] = round((calc_usa / self.dict_patrimonio['candle_usa']['open'])*100,4)
+        try:
+            dict_rent['rent_total'] = round((calc / self.dict_patrimonio['candle_total']['open'])*100,4)
+            dict_rent['rent_br'] = round((calc_br / self.dict_patrimonio['candle_br']['open'])*100,4)
+            dict_rent['rent_usa'] = round((calc_usa / self.dict_patrimonio['candle_usa']['open'])*100,4)
 
-        if vol_media == True:
-            dict_rent['rent_total'] = round(((calc / self.dict_patrimonio['candle_total']['open']) * (self.dias ** 0.5)) *100,4)
-            dict_rent['rent_br'] = round(((calc_br / self.dict_patrimonio['candle_br']['open']) * (self.dias ** 0.5))*100,4)
-            dict_rent['rent_usa'] = round(((calc_usa / self.dict_patrimonio['candle_usa']['open']) * (self.dias ** 0.5))*100,4)
-        
-        if anual == True:
-            dict_rent['rent_total'] = round(((calc / self.dict_patrimonio['candle_total']['open']) * (252 ** 0.5)) *100,4)
-            dict_rent['rent_br'] = round(((calc_br / self.dict_patrimonio['candle_br']['open']) * (252 ** 0.5))*100,4)
-            dict_rent['rent_usa'] = round(((calc_usa / self.dict_patrimonio['candle_usa']['open']) * (252 ** 0.5))*100,4)
+            if vol_media == True:
+                dict_rent['rent_total'] = round(((calc / self.dict_patrimonio['candle_total']['open']) * (self.dias ** 0.5)) *100,4)
+                dict_rent['rent_br'] = round(((calc_br / self.dict_patrimonio['candle_br']['open']) * (self.dias ** 0.5))*100,4)
+                dict_rent['rent_usa'] = round(((calc_usa / self.dict_patrimonio['candle_usa']['open']) * (self.dias ** 0.5))*100,4)
+            
+            if anual == True:
+                dict_rent['rent_total'] = round(((calc / self.dict_patrimonio['candle_total']['open']) * (252 ** 0.5)) *100,4)
+                dict_rent['rent_br'] = round(((calc_br / self.dict_patrimonio['candle_br']['open']) * (252 ** 0.5))*100,4)
+                dict_rent['rent_usa'] = round(((calc_usa / self.dict_patrimonio['candle_usa']['open']) * (252 ** 0.5))*100,4)
+        except:
+            dict_rent['rent_total'], dict_rent['rent_br'], dict_rent['rent_usa'] = 0, 0, 0
 
         return dict_rent
 
